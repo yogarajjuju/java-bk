@@ -1,3 +1,5 @@
+package Day1;
+
 class Person {
     String name;
 
