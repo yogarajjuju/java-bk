@@ -1,4 +1,6 @@
 package Day7;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.*;
 
@@ -95,5 +97,37 @@ public class StudentDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public List<Student> getAllStudents() {
+
+        List<Student> students = new ArrayList<>();
+
+        String sql = "SELECT * FROM students";
+
+        try (
+                Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+        ) {
+
+            while (rs.next()) {
+
+                Student student =
+                        new Student(
+                                rs.getString("name"),
+                                rs.getInt("age"),
+                                rs.getString("department")
+                        );
+
+                student.setId(rs.getInt("id"));
+
+                students.add(student);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return students;
     }
 }
